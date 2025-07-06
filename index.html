@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mode Gelap & Terang</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Jetbrains mono', monospace;
+      transition: background-color 0.5s, color 0.5s;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+      color: black;
+    }
+
+    .dark-mode {
+      background-color: #121212;
+      color: white;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+      margin-top: 20px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #2196f3;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+
+    .mode-text {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Halaman Interaktif</h1>
+    <p>Klik saklar untuk ubah ke mode gelap atau terang</p>
+
+    <label class="switch">
+      <input type="checkbox" id="toggleSwitch" />
+      <span class="slider"></span>
+    </label>
+    <div class="mode-text" id="modeText">Mode: Terang</div>
+
+    <audio id="clickSound" preload="auto">
+      <source src="sfx.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <script>
+    const toggleSwitch = document.getElementById("toggleSwitch");
+    const modeText = document.getElementById("modeText");
+    const clickSound = document.getElementById("clickSound");
+
+    toggleSwitch.addEventListener("change", function () {
+      document.body.classList.toggle("dark-mode");
+      const isDark = document.body.classList.contains("dark-mode");
+      modeText.textContent = isDark ? "Mode: Gelap" : "Mode: Terang";
+
+      // Play sound
+      clickSound.currentTime = 0;
+      clickSound.play().catch(error => {
+        console.log("Audio tidak bisa diputar secara otomatis:", error);
+      });
+    });
+  </script>
+</body>
+</html>
